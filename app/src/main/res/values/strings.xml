@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AfterMobileInternship</string>
+    <string name="user_name">User name</string>
+    <string name="issues">Issues</string>
+    <string name="stars">Stars</string>
+    <string name="forks">Forks</string>
+    <string name="user_doesn_t_exist">User doesn\'t exist!</string>
+    <string name="close">Close</string>
+    <string name="please_fill_in">Please fill in!</string>
+    <string name="user_has_no_repositories">User has no repositories!</string>
+</resources>
