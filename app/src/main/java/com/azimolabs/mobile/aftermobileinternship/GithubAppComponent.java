@@ -1,10 +1,7 @@
 package com.azimolabs.mobile.aftermobileinternship;
 
-import com.azimolabs.mobile.aftermobileinternship.GithubAppModule;
-import com.azimolabs.mobile.aftermobileinternship.GithubApplication;
-import com.azimolabs.mobile.aftermobileinternship.github.GitHubAPIClientModule;
+import com.azimolabs.mobile.aftermobileinternship.github.GitHubApiClientModule;
 import com.azimolabs.mobile.aftermobileinternship.main.MainActivityComponent;
-import com.azimolabs.mobile.aftermobileinternship.repositorieslist.RepositoriesListActivity;
 import com.azimolabs.mobile.aftermobileinternship.repositorieslist.RepositoriesListActivityComponent;
 
 import dagger.Component;
@@ -12,7 +9,7 @@ import dagger.Component;
 @Component(
     modules = {
         GithubAppModule.class,
-        GitHubAPIClientModule.class
+        GitHubApiClientModule.class
     }
 )
 public interface GithubAppComponent {

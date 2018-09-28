@@ -1,7 +1,7 @@
 package com.azimolabs.mobile.aftermobileinternship.main;
 
 import com.azimolabs.mobile.aftermobileinternship.base.BasePresenter;
-import com.azimolabs.mobile.aftermobileinternship.github.GitHubAPIClient;
+import com.azimolabs.mobile.aftermobileinternship.github.GitHubApiClient;
 import com.azimolabs.mobile.aftermobileinternship.utils.Navigator;
 import com.azimolabs.mobile.aftermobileinternship.utils.RxTransformerManager;
 
@@ -13,14 +13,14 @@ import static com.azimolabs.mobile.aftermobileinternship.utils.ErrorType.UNKNOWN
 
 class MainActivityPresenter extends BasePresenter {
     private final MainActivity view;
-    private final GitHubAPIClient gitHubAPIClient;
+    private final GitHubApiClient gitHubAPIClient;
     private final Navigator navigator;
     private final RxTransformerManager rxTransformerManager;
 
     @Inject
     public MainActivityPresenter(
         MainActivity view,
-        GitHubAPIClient gitHubAPIClient,
+        GitHubApiClient gitHubAPIClient,
         Navigator navigator,
         RxTransformerManager rxTransformerManager
     ) {

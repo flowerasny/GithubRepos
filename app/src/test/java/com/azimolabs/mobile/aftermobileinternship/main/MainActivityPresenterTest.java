@@ -2,7 +2,7 @@ package com.azimolabs.mobile.aftermobileinternship.main;
 
 import android.accounts.NetworkErrorException;
 
-import com.azimolabs.mobile.aftermobileinternship.github.GitHubAPIClient;
+import com.azimolabs.mobile.aftermobileinternship.github.GitHubApiClient;
 import com.azimolabs.mobile.aftermobileinternship.github.RepositoryItem;
 import com.azimolabs.mobile.aftermobileinternship.utils.ErrorType;
 import com.azimolabs.mobile.aftermobileinternship.utils.Navigator;
@@ -27,7 +27,7 @@ public class MainActivityPresenterTest {
     @Mock
     MainActivity view;
     @Mock
-    GitHubAPIClient gitHubAPIClient;
+    GitHubApiClient gitHubAPIClient;
     @Mock
     Navigator navigator;
     @Mock

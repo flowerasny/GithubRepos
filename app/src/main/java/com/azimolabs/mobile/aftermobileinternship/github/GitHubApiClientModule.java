@@ -3,20 +3,19 @@ package com.azimolabs.mobile.aftermobileinternship.github;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
-public class GitHubAPIClientModule {
+public class GitHubApiClientModule {
 
     @Provides
-    public GitHubAPIClient gitHubAPIClient(Retrofit retrofit) {
-        return retrofit.create(GitHubAPIClient.class);
+    public GitHubApiClient gitHubAPIClient(Retrofit retrofit) {
+        return retrofit.create(GitHubApiClient.class);
     }
 
     @Provides

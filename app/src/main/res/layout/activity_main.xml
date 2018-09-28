@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.MainActivity"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    tools:context=".main.MainActivity">
 
     <ProgressBar
         android:id="@+id/pbLoadingRepos"
@@ -19,8 +19,8 @@
         android:id="@+id/llUserPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
         android:layout_marginEnd="18dp"
+        android:layout_marginStart="18dp"
         android:orientation="horizontal">
 
         <EditText
@@ -36,17 +36,17 @@
             android:layout_height="50dp"
             android:background="@drawable/ic_start_loading"/>
     </LinearLayout>
+
     <TextView
         android:id="@+id/tvUserError"
-        android:layout_gravity="start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:layout_marginStart="42dp"
         android:text="@string/user_doesn_t_exist"
-        android:textSize="12sp"
         android:textColor="@color/error"
+        android:textSize="12sp"
         android:visibility="invisible"
-        tools:visibility="visible"
-        />
+        tools:visibility="visible"/>
 
 </LinearLayout>
