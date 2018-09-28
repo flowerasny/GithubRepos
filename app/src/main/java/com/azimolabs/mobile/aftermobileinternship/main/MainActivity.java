@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.btnLoadRepos)
     public void clicked() {
-        presenter.tryToLoadRepos(tvUserError.getText().toString());
+        presenter.tryToLoadRepos(etUserName.getText().toString());
     }
 
     @Override
