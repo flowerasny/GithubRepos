@@ -8,4 +8,5 @@
     <string name="close">Close</string>
     <string name="please_fill_in">Please fill in!</string>
     <string name="user_has_no_repositories">User has no repositories!</string>
+    <string name="connection_error">Connection error!</string>
 </resources>

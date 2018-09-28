@@ -2,9 +2,6 @@ package com.azimolabs.mobile.aftermobileinternship;
 
 import android.app.Application;
 
-import com.azimolabs.mobile.aftermobileinternship.DaggerGithubAppComponent;
-
-
 public class GithubApplication extends Application {
 
     private static GithubAppComponent component;

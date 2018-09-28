@@ -17,9 +17,11 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
+import retrofit2.HttpException;
 import rx.Observable;
 
 import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -32,6 +34,8 @@ public class MainActivityPresenterTest {
     Navigator navigator;
     @Mock
     RxTransformerManager rxTransformerManager;
+    @Mock
+    UserFieldErrorDisposer userFieldErrorDisposer;
 
     MainActivityPresenter tested;
 
@@ -40,19 +44,23 @@ public class MainActivityPresenterTest {
         MockitoAnnotations.initMocks(this);
 
         tested = new MainActivityPresenter(
-          view,
-          gitHubAPIClient,
-          navigator,
-          rxTransformerManager
+            view,
+            gitHubAPIClient,
+            navigator,
+            rxTransformerManager,
+            userFieldErrorDisposer
         );
     }
 
     @Test
-    public void testTryToLoadRepos_whenConnectionFailed_shouldShowUnknownUserErrorAndHideKeyboard() {
+    public void testTryToLoadRepos_whenConnectionFailed_shouldShowConnectionErrorAndHideKeyboard() {
         String userNameMock = "user";
         Observable<List<RepositoryItem>> observableMock = Observable.error(new NetworkErrorException());
+        UserFieldError userFieldErrorMock = new UserFieldError(ErrorType.CONNECTION_ERROR, "errorMassage");
+
         when(gitHubAPIClient.loadRepos(userNameMock)).thenReturn(observableMock);
         when(rxTransformerManager.applyIOScheduler(observableMock)).thenReturn(observableMock);
+        when(userFieldErrorDisposer.getError(ErrorType.CONNECTION_ERROR)).thenReturn(userFieldErrorMock);
 
         tested.tryToLoadRepos(userNameMock);
 
@@ -60,7 +68,28 @@ public class MainActivityPresenterTest {
         InOrder inOrder = inOrder(view);
         inOrder.verify(view).showLoading();
         inOrder.verify(view).hideLoading();
-        verify(view).showError(ErrorType.UNKNOWN_USER);
+        verify(view).showError(userFieldErrorMock);
+    }
+
+    @Test
+    public void testTryToLoadRepos_whenUserNotFoundFailed_shouldShowUnknownUserErrorAndHideKeyboard() {
+        String userNameMock = "user";
+        HttpException errorMock = mock(HttpException.class);
+        Observable<List<RepositoryItem>> observableMock = Observable.error(errorMock);
+        UserFieldError userFieldErrorMock = new UserFieldError(ErrorType.UNKNOWN_USER, "errorMassage");
+
+        when(errorMock.code()).thenReturn(404);
+        when(gitHubAPIClient.loadRepos(userNameMock)).thenReturn(observableMock);
+        when(rxTransformerManager.applyIOScheduler(observableMock)).thenReturn(observableMock);
+        when(userFieldErrorDisposer.getError(ErrorType.UNKNOWN_USER)).thenReturn(userFieldErrorMock);
+
+        tested.tryToLoadRepos(userNameMock);
+
+        verify(view).hideKeyboard();
+        InOrder inOrder = inOrder(view);
+        inOrder.verify(view).showLoading();
+        inOrder.verify(view).hideLoading();
+        verify(view).showError(userFieldErrorMock);
     }
 
     @Test
@@ -68,8 +97,11 @@ public class MainActivityPresenterTest {
         String userNameMock = "user";
         List<RepositoryItem> userReposMock = Collections.emptyList();
         Observable<List<RepositoryItem>> observableMock = Observable.just(userReposMock);
+        UserFieldError userFieldErrorMock = new UserFieldError(ErrorType.NO_REPOSITORIES, "errorMassage");
+
         when(gitHubAPIClient.loadRepos(userNameMock)).thenReturn(observableMock);
         when(rxTransformerManager.applyIOScheduler(observableMock)).thenReturn(observableMock);
+        when(userFieldErrorDisposer.getError(ErrorType.NO_REPOSITORIES)).thenReturn(userFieldErrorMock);
 
         tested.tryToLoadRepos(userNameMock);
 
@@ -77,7 +109,7 @@ public class MainActivityPresenterTest {
         InOrder inOrder = inOrder(view);
         inOrder.verify(view).showLoading();
         inOrder.verify(view).hideLoading();
-        verify(view).showError(ErrorType.NO_REPOSITORIES);
+        verify(view).showError(userFieldErrorMock);
     }
 
     @Test
@@ -85,6 +117,7 @@ public class MainActivityPresenterTest {
         String userNameMock = "user";
         List<RepositoryItem> userReposMock = Collections.singletonList(new RepositoryItem());
         Observable<List<RepositoryItem>> observableMock = Observable.just(userReposMock);
+
         when(gitHubAPIClient.loadRepos(userNameMock)).thenReturn(observableMock);
         when(rxTransformerManager.applyIOScheduler(observableMock)).thenReturn(observableMock);
 
@@ -99,9 +132,12 @@ public class MainActivityPresenterTest {
 
     @Test
     public void testTryToLoadRepos_whenNameIsEmpty_shouldShowEmptyFieldErrorAndHideKeyboard() {
+        UserFieldError userFieldErrorMock = new UserFieldError(ErrorType.EMPTY_FIELD, "errorMassage");
+        when(userFieldErrorDisposer.getError(ErrorType.EMPTY_FIELD)).thenReturn(userFieldErrorMock);
+
         tested.tryToLoadRepos("");
 
-        verify(view).showError(ErrorType.EMPTY_FIELD);
+        verify(view).showError(userFieldErrorMock);
         verify(view).hideKeyboard();
     }
 

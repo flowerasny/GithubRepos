@@ -12,7 +12,6 @@ import com.azimolabs.mobile.aftermobileinternship.R;
 import com.azimolabs.mobile.aftermobileinternship.base.BaseActivity;
 import com.azimolabs.mobile.aftermobileinternship.base.BasePresenter;
 import com.azimolabs.mobile.aftermobileinternship.github.ActivityComponent;
-import com.azimolabs.mobile.aftermobileinternship.utils.ErrorType;
 import com.azimolabs.mobile.aftermobileinternship.utils.KeyboardHelper;
 
 import javax.inject.Inject;
@@ -63,17 +62,8 @@ public class MainActivity extends BaseActivity {
         return presenter;
     }
 
-    public void showError(ErrorType type) {
-        switch (type) {
-            case EMPTY_FIELD:
-                tvUserError.setText(R.string.please_fill_in);
-                break;
-            case UNKNOWN_USER:
-                tvUserError.setText(R.string.user_doesn_t_exist);
-                break;
-            case NO_REPOSITORIES:
-                tvUserError.setText(R.string.user_has_no_repositories);
-        }
+    public void showError(UserFieldError error) {
+        tvUserError.setText(error.getErrorMessage());
         tvUserError.setVisibility(View.VISIBLE);
         etUserName.getBackground().mutate().setColorFilter(getResources().getColor(R.color.error), PorterDuff.Mode.SRC_ATOP);
     }
